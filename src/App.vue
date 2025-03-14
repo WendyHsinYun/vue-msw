@@ -15,24 +15,26 @@
 import { ref, onMounted } from 'vue'
 
 const classes = ref([])
+
 const apiUrl = import.meta.env.BASE_URL + 'api/classes';
 
 onMounted(async () => {
   try {
-    const response = await fetch(apiUrl)
+    const response = await fetch(apiUrl);
 
-    // Check if the response is JSON
-    const contentType = response.headers.get('content-type')
+    // 檢查 Content-Type，確保是 JSON
+    const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
-      const text = await response.text()
-      console.error('API response error:', text)
-      throw new Error('response data is not JSON')
+      const text = await response.text();
+      console.error('API 回應錯誤:', text);
+      throw new Error('回應資料不是 JSON');
     }
 
-    classes.value = await response.json()
+    classes.value = await response.json();
   } catch (error) {
-    console.error('loading error:', error)
+    console.error('載入課程失敗:', error);
   }
-})
+});
+
 
 </script>
